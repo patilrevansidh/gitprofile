@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import SearchBox from './searchBox';
 import { connect } from 'react-redux';
-import userService from './service';
 import onSearchUser from './action';
 import UsersList from './userList';
 

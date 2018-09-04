@@ -5,10 +5,9 @@ const searchBox = (props) => {
     return (
         <Form onSubmit={(e)=>{e.preventDefault();props.onSubmit()}}>
             <FormGroup>
-                <Label>User Name</Label>
                 <Input name="userName" 
-                        id="exampleEmail" placeholder="User name" 
-                        onChange={(e)=>props.onUserNameChange(e)} />
+                    id="exampleEmail" placeholder="User name" 
+                    onChange={(e)=>props.onUserNameChange(e)} />
             </FormGroup>
         </Form>
     );

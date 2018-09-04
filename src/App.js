@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
-import Search from './modules/search';
+import { Container } from 'reactstrap';
+import SearchContainer from './app/search/searchbox/searchContainer';
 
 
-class App extends Component {
+class App extends Component { 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">          
-        </header>        
-        <Search/>
-      </div>
+      <Container>
+        <SearchContainer/>
+      </Container>
     );
-  }
+  }  
 }
 
 export default App;
