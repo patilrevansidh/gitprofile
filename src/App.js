@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container } from 'reactstrap';
 import SearchContainer from './app/search/searchbox/searchContainer';
+import ProfileListContainer from './app/search/profileList/profileListContainer';
 
 
 class App extends Component { 
@@ -8,6 +9,7 @@ class App extends Component {
     return (
       <Container>
         <SearchContainer/>
+        <ProfileListContainer/>
       </Container>
     );
   }  
