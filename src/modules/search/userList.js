@@ -1,7 +1,5 @@
 import React from 'react';
-import { Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button } from 'reactstrap';
-import ReactPaginate from 'react-paginate';
+import { Card,  CardText, CardBody, CardTitle,  Button } from 'reactstrap';
 
 
 const UserList = (props) => {

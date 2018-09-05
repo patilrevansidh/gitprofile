@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ProfileCard from './profileCard';
 import { CardTitle, Row, Col } from 'reactstrap';
-import { COLOR } from '../../../common/constatns/stringConstants'
-// showLoader
-// profiles
+
 const  ProfileList =(props)=> {
     const list = props.showLoader === undefined ? null 
                 : props.showLoader === true 

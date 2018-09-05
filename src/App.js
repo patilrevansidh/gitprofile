@@ -3,9 +3,9 @@ import { Container } from 'reactstrap';
 import SearchComponent from './app/search/searchbox/searchComponent';
 import ProfileListContainer from './app/search/profileList/profileListContainer';
 import searchService from './app/search/service';
-import ReactPaginate  from 'react-paginate';
 import { CONST_VALUE } from './common/constatns/stringConstants';
 import _ from 'lodash';
+import ReactstrapPagination from './app/search/profileList/pagination';
 
 class App extends Component { 
   constructor(props) {
@@ -33,7 +33,7 @@ class App extends Component {
         'per_page': CONST_VALUE.COUNT_PER_PAGE
       }
       const response = await searchService.searchUserName(body)
-      if(response.total_count != undefined) {
+      if(response.total_count !== undefined) {
         this.setState({loadingProfiles: false, profiles: response.items, total_count: response.total_count, error: false});
       }else {
         this.setState({ error: response.message });
@@ -64,7 +64,7 @@ class App extends Component {
             'open_issues' : m.open_issues,
             'stargazers_count' : m.stargazers_count,
             'forks' : m.forks,
-            'watchers' : m.watchers,
+            'watchers' : m.watchers_count,
           }
           return obj
         });
@@ -79,22 +79,17 @@ class App extends Component {
   }
 
   render() {
-    const pagination = this.state.total_count/CONST_VALUE.COUNT_PER_PAGE >= 2  ? <ReactPaginate 
-                          style= {{ cursor:'pointer' }}
-                          breakLabel= {<a href="">...</a>}
-                          breakClassName= {"break-me"}
-                          containerClassName= {"pagination"}
-                          subContainerClassName= {"pages pagination"}
-                          onPageChange= {(e)=>this.setState({ page: e.selected },()=>this.handleSearch())} 
-                          pageCount= {this.state.total_count/CONST_VALUE.COUNT_PER_PAGE} 
-                          pageRangeDisplayed= {2} 
-                          marginPagesDisplayed= {2}/>
+    const pagination = this.state.total_count/CONST_VALUE.COUNT_PER_PAGE >= 2  ? <ReactstrapPagination                      
+                          currentPage={this.state.page}
+                          onPageChange= {(page)=>this.setState({ page:page },()=>this.handleSearch())} 
+                          pageCount= {Math.ceil(this.state.total_count/CONST_VALUE.COUNT_PER_PAGE)} 
+                          />
                      : '';
     const profileList = this.state.error === false 
                       ?  <ProfileListContainer 
                         onDetailPress= {this.handleDetailPress}
                         showLoader= {this.state.loadingProfiles} 
-                        profiles= { this.state.sortType == "score" ? _.orderBy(this.state.profiles,['score'],['dsc']) : this.state.profiles} />
+                        profiles= { this.state.sortType === "score" ? _.orderBy(this.state.profiles,['score'],['dsc']) : this.state.profiles} />
                       : <p> {this.state.error} </p>
     return (
       <Container>

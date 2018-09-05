@@ -12,11 +12,11 @@ const Repotable = (props) => {
                     </tr>
                 }) : '';
     return (
-        <Table striped>
+        <Table className="table-responsive" striped>
             <thead>
                 {tbHeader}
             </thead>
-            <tbody>
+            <tbody className="table">
                 {tbRow}
             </tbody>
         </Table>
