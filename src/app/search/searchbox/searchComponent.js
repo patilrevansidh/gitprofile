@@ -12,7 +12,7 @@ const SearchContainer = (props) => {
               <FormGroup>
                 <Input onChange={(e) => props.onChange(e)} type="select" name="sortType" id="exampleSelect">
                   <option value="name" >Name</option>
-                  <option value="rank">Rank</option>
+                  <option value="score">Rank</option>
                 </Input>
               </FormGroup>
             </Col>

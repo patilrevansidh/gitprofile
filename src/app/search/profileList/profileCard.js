@@ -35,7 +35,7 @@ const ProfileCard = ({profile}) => {
                     </Col>
                     <Col sm="6">
                         <CardTitle>{profile.login}</CardTitle>
-                        <CardSubtitle>{profile.followers_url}</CardSubtitle>
+                        <CardSubtitle>Score : {profile.score}</CardSubtitle>
                     </Col>
                     <Col sm="3">
                         <Button outline color="primary">Details</Button>{' '}
