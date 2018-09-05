@@ -9,3 +9,7 @@ export const SORT_TYPES = {
     NAME: '',
     RANK: ''
 }
+
+export const CONST_VALUE = {
+    COUNT_PER_PAGE : 50,
+}

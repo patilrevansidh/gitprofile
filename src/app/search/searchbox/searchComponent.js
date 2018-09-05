@@ -18,7 +18,7 @@ const SearchContainer = (props) => {
             </Col>
             <Col sm="6">
               <FormGroup>
-                <Input onChange={(e) => props.onChange(e)} type="text" name="userName" id="username" placeholder="Search User" />
+                <Input onChange={(e) => props.onChange(e)} type="text" name="username" id="username" placeholder="Search User" />
               </FormGroup>
             </Col>
           </Row>
