@@ -1,7 +1,8 @@
 import React from 'react';
-import { Card, Row, CardImg, Col } from 'reactstrap';
+import { Card, Row, CardImg, Col, CardTitle, CardSubtitle, CardBody, Button } from 'reactstrap';
+import { COLOR } from '../../../common/constatns/stringConstants';
 
-const myProfile = {
+const profile = {
     "login": "patilrevansidh",
     "id": 11453641,
     "node_id": "MDQ6VXNlcjExNDUzNjQx",
@@ -23,16 +24,24 @@ const myProfile = {
     "score": 42.3586
 }
 
-const ProfileCard = () => {
+const ProfileCard = ({profile}) => {
+    // const profile = props.profile
     return (
-        <Card style={{height:300}}>
-            <Row style={{alignItems:'center'}}>
-                <Col sm="4">
-                    <CardImg style={{height:100,width:100,}} src={myProfile.avatar_url}/>
-                </Col>
-                <Col sm="8">
-                </Col>
-            </Row>
+        <Card style={{ marginTop: 10 }}>
+            <CardBody>
+                <Row style={{alignItems:'center'}}>
+                    <Col sm="3">
+                        <CardImg style={{height:100,width:100,borderRadius:'50%'}} src={profile.avatar_url}/>
+                    </Col>
+                    <Col sm="6">
+                        <CardTitle>{profile.login}</CardTitle>
+                        <CardSubtitle>{profile.followers_url}</CardSubtitle>
+                    </Col>
+                    <Col sm="3">
+                        <Button outline color="primary">Details</Button>{' '}
+                    </Col>
+                </Row>
+            </CardBody>
         </Card>
     );
 };
