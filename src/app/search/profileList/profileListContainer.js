@@ -9,7 +9,7 @@ const  ProfileList =(props)=> {
                 : props.showLoader === true 
                 ? <p> Loading profiles.. </p> 
                 : Array.isArray(props.profiles) && props.profiles.length > 0 
-                    ? props.profiles.map(m=><ProfileCard key={m.id} profile={m}/>)  
+                    ? props.profiles.map(m=><ProfileCard onDetailPress={props.onDetailPress} key={m.id} profile={m}/>)  
                     : <CardTitle> No user found </CardTitle>
     return (
         <Row>

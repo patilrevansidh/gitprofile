@@ -19,8 +19,9 @@ class App extends Component {
       sortType:'name',
       error : undefined
     }
-    this.handleSearch = this.handleSearch.bind(this)
-    this.handleChange = this.handleChange.bind(this)    
+    this.handleSearch = this.handleSearch.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleDetailPress = this.handleDetailPress.bind(this);
   }
 
   async handleSearch() {    
@@ -45,22 +46,53 @@ class App extends Component {
   handleChange(e) {
     this.setState({[e.target.name]:e.target.value});
   }
+  async handleDetailPress(username,id) {
+    try {
+      const profiles = this.state.profiles
+      const index = _.findIndex(this.state.profiles, function(p) { return p.login === username })
+      let profile = profiles[index]
+      console.log("profile",index)
+      if(profile.repos) {
+          delete profile.repos
+          profiles[index] = profile
+      }else {
+        let repos = await searchService.fetchRepoDetails(username)
+        repos = repos.map((m)=>{
+          const obj = {
+            'name' : m.name,
+            'language' : m.language,
+            'open_issues' : m.open_issues,
+            'stargazers_count' : m.stargazers_count,
+            'forks' : m.forks,
+            'watchers' : m.watchers,
+          }
+          return obj
+        });
+        profile = {...profile,repos}
+        profiles[index] = profile
+      }
+      // console.log("profile",profiles)
+      this.setState({profiles});      
+    } catch (error) {
+      console.log("errors",error)
+    }
+  }
 
   render() {
-    const pagination = (this.state.profiles.length > 0 && this.state.loadingProfiles === false) || this.state.error
-                     ? <a><ReactPaginate 
-                          style={{cursor:'pointer'}}
-                          breakLabel={<a href="">...</a>}
-                          breakClassName={"break-me"}
-                          containerClassName={"pagination"}
-                          subContainerClassName={"pages pagination"}
-                          onPageChange={(e)=>this.setState({ page: e.selected },()=>this.handleSearch())} 
-                          pageCount={this.state.total_count/CONST_VALUE.COUNT_PER_PAGE} 
-                          pageRangeDisplayed={2} 
-                          marginPagesDisplayed={2}/></a>
+    const pagination = this.state.total_count/CONST_VALUE.COUNT_PER_PAGE >= 2  ? <ReactPaginate 
+                          style= {{ cursor:'pointer' }}
+                          breakLabel= {<a href="">...</a>}
+                          breakClassName= {"break-me"}
+                          containerClassName= {"pagination"}
+                          subContainerClassName= {"pages pagination"}
+                          onPageChange= {(e)=>this.setState({ page: e.selected },()=>this.handleSearch())} 
+                          pageCount= {this.state.total_count/CONST_VALUE.COUNT_PER_PAGE} 
+                          pageRangeDisplayed= {2} 
+                          marginPagesDisplayed= {2}/>
                      : '';
     const profileList = this.state.error === false 
                       ?  <ProfileListContainer 
+                        onDetailPress= {this.handleDetailPress}
                         showLoader= {this.state.loadingProfiles} 
                         profiles= { this.state.sortType == "score" ? _.orderBy(this.state.profiles,['score'],['dsc']) : this.state.profiles} />
                       : <p> {this.state.error} </p>
