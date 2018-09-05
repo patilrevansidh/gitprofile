@@ -36,7 +36,7 @@ function constructParams(body) {
 	let params = "?"
 	 if(Object.keys(body)) {
             Object.keys(body).map((m)=>{
-                params = `${params}${m}=${body[m]}`
+                params = `${params}${m}=${body[m]}&`
             })
      }
 	return params
