@@ -16,7 +16,7 @@ class App extends Component {
       page: 1,
       total_count:0,
       username:'',
-      sortType:'name',
+      sortType:'score_dsc',
       error : undefined
     }
     this.handleSearch = this.handleSearch.bind(this);
@@ -44,9 +44,24 @@ class App extends Component {
   }
   
   handleChange(e) {
-    this.setState({[e.target.name]:e.target.value});
+    if(e.target.name === "username") {
+      this.setState({[e.target.name]:e.target.value},()=>this.handleSearch());
+    }else {
+          let profileList = []
+         if(e.target.value === 'name_dsc') {
+            profileList = _.orderBy(this.state.profiles,['login'],['desc'])
+          }else if(e.target.value === 'score_dsc'){
+              profileList= _.orderBy(this.state.profiles,['score'],['desc'])
+          }else if(e.target.value === 'score_asc') {
+              profileList= _.orderBy(this.state.profiles,['score'],['asc'])
+          }else if(e.target.value === 'name_asc'){
+              profileList = _.orderBy(this.state.profiles,['login'],['asc']);
+          }
+      this.setState({ profiles: profileList });
+    }
   }
-  async handleDetailPress(username,id) {
+
+  async handleDetailPress(username) {
     try {
       const profiles = this.state.profiles
       const index = _.findIndex(this.state.profiles, function(p) { return p.login === username })
@@ -71,7 +86,6 @@ class App extends Component {
         profile = {...profile,repos}
         profiles[index] = profile
       }
-      // console.log("profile",profiles)
       this.setState({profiles});      
     } catch (error) {
       console.log("errors",error)
@@ -89,7 +103,7 @@ class App extends Component {
                       ?  <ProfileListContainer 
                         onDetailPress= {this.handleDetailPress}
                         showLoader= {this.state.loadingProfiles} 
-                        profiles= { this.state.sortType === "score" ? _.orderBy(this.state.profiles,['score'],['dsc']) : this.state.profiles} />
+                        profiles= {this.state.profiles} />
                       : <p> {this.state.error} </p>
     return (
       <Container>
@@ -102,3 +116,7 @@ class App extends Component {
 }
 
 export default App;
+// name_asc
+// name_dsc
+// score_asc
+// score_dsc

@@ -1,12 +1,13 @@
 import React from 'react';
 import ProfileCard from './profileCard';
 import { CardTitle, Row, Col } from 'reactstrap';
+import _ from 'lodash';
 
-const  ProfileList =(props)=> {
+const  ProfileList =(props)=> {    
     const list = props.showLoader === undefined ? null 
                 : props.showLoader === true 
                 ? <p> Loading profiles.. </p> 
-                : Array.isArray(props.profiles) && props.profiles.length > 0 
+                : Array.isArray(props.profiles) &&  props.profiles.length > 0 
                     ? props.profiles.map(m=><ProfileCard onDetailPress={props.onDetailPress} key={m.id} profile={m}/>)  
                     : <CardTitle> No user found </CardTitle>
     return (
